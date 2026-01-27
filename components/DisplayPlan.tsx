@@ -10,10 +10,10 @@ const DisplayPlan = () => {
   console.log(tasksAndMeets)
   const day = 2;
   return (
-    <>
+    <div className='flex flex-col flex-1'>
       <Calender />
       <TaskAndMeet tasksAndMeets={tasksAndMeets[day-1]} />
-    </>
+    </div>
   )
 }
 
