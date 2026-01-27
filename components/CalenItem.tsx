@@ -1,0 +1,21 @@
+import React from 'react'
+interface CalenItemProps{
+    dayNo:number,
+    progress:number
+}
+const CalenItem = ({dayNo,progress}:CalenItemProps) => {
+  const hue = (progress * 130) / 100;
+  return (
+    <div className='flex flex-col rounded-md border items-center px-5 py-1 border-[#d2c7f9] hover:bg-violet-100'
+    >
+        <span className='text-xs text-start font-normal whitespace-pre-line'>Day</span>
+        <span className='text-xl text-start font-medium -mt-xxs whitespace-pre-line'>{dayNo}</span>
+        <span style={{
+            color:`hsl(${hue}, 100%, 40%)`,
+          }} className='class="text-xs text-center font-bold ms-sm whitespace-pre-line"'
+          >{progress}%</span>
+    </div>
+  )
+}
+
+export default CalenItem
