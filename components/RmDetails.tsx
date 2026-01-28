@@ -63,7 +63,7 @@ export default function RmDetails() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col flex-1 p-4 border border-t-0 rounded-b-3xl gap-16">
+      <div className="flex flex-col flex-1 p-4 border border-t-0 rounded-b-3xl gap-6">
         <Stepper activeStep={3} orientation="vertical">
           {steps.map((step, index) => (
             <Step key={step.label}>
@@ -104,7 +104,7 @@ export default function RmDetails() {
             </Step>
           ))}
         </Stepper>
-        <div className="flex flex-col bg-[#f7f6fe] rounded-2xl" 
+        <div className="flex flex-col bg-[#f7f6fe] rounded-2xl p-2" 
               onClick={handleClick}>
           <div className="flex rounded-2xl p-2">
             <div className="flex flex-1 justify-center items-center bg-[#f4f1fe] rounded-2xl">

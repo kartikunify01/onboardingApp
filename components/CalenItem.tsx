@@ -12,7 +12,7 @@ const CalenItem = ({dayNo,progress}:CalenItemProps) => {
         <span className='text-xl text-start font-medium -mt-xxs whitespace-pre-line'>{dayNo}</span>
         <span style={{
             color:`hsl(${hue}, 100%, 40%)`,
-          }} className='class="text-xs text-center font-bold ms-sm whitespace-pre-line"'
+          }} className="text-xs text-center font-bold ms-sm whitespace-pre-line"
           >{progress}%</span>
     </div>
   )

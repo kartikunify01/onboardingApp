@@ -1,229 +1,143 @@
-// "use client";
+"use client"
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import CloseIcon from '@mui/icons-material/Close';
+import Image from "next/image";
+import { languageOptions } from "@/lib/uses";
+import GradingIcon from '@mui/icons-material/Grading';
 
-// import React, { useState } from "react";
-// import validator from "@rjsf/validator-ajv8";
-// import Form, { IChangeEvent } from "@rjsf/core";
-// import { RJSFSchema, UiSchema } from "@rjsf/utils";
-// import { Box, Paper, Typography } from "@mui/material";
-
-
-// const uiSchema: UiSchema = {
-
-// };
-
-// interface UserProfile {
-//   "Check-In for Date": string;
-//   "Select Language": string;
-//   "What Did You Complete Today?": string;
-//   "Issues or Blockers Faced": string;
-//   "Related Links": string;
-// }
-// const CheckInForm = () => {
-//   const [formData, setFormData] = useState<UserProfile | null | undefined>(
-//     null,
-//   );
-
-//   const handleSubmit = (
-//     data: IChangeEvent<UserProfile, RJSFSchema, UserProfile>,
-//   ) => {
-//     console.log("Form data submitted:", data.formData);
-//     setFormData(data.formData);
-//   };
-
-//   return (
-//     <Box sx={{ maxWidth: 600, margin: "0 auto", padding: 3 }}>
-//       <Typography variant="h4" gutterBottom>
-//         User Profile Form
-//       </Typography>
-
-//       <Paper elevation={3} sx={{ padding: 3, marginBottom: 3 }}>
-//         <Form
-//           schema={schema}
-//           validator={validator}
-//           uiSchema={uiSchema}
-//           //   validator={validator}
-//           //   onSubmit={handleSubmit}
-//           className=""
-//         />
-//       </Paper>
-
-//       {formData && (
-//         <Paper elevation={3} sx={{ padding: 3 }}>
-//           <Typography variant="h6" gutterBottom>
-//             Submitted Data:
-//           </Typography>
-//           <pre>{JSON.stringify(formData, null, 2)}</pre>
-//         </Paper>
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default CheckInForm;
-
-
-'use client';
-
-import React, { useState } from "react";
-
-import Form from "@rjsf/mui";
-import validator from "@rjsf/validator-ajv8";
-
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { Box, Paper, Typography } from "@mui/material";
-import { RJSFSchema, UiSchema } from "@rjsf/utils";
-
-
-const schema: RJSFSchema = {
-  type: "object",
-  properties: {
-    checkInDate: {
-      type: "string",
-      title: "Check-In Date",
-      format: "date",
-    },
-    language: {
-      type: "string",
-      title: "Select Language",
-      enum: ["English", "Hindi", "French", "Spanish"],
-    },
-    completed: {
-      type: "string",
-      title: "What Did You Complete Today?",
-    },
-    blockers: {
-      type: "string",
-      title: "Issues or Blockers Faced",
-    },
-    links: {
-      type: "string",
-      title: "Related Links",
-    },
-  },
-};   
-const uiSchema: UiSchema = {
-    completed: {
-        "ui:widget": "textarea",
-        "ui:options": { rows: 4 },
-        "ui:classNames": "rounded-2xl",
-        "ui:placeholder": "Summarize your completed tasks for today",
-    },
-    blockers: {
-        "ui:widget":"textarea",
-        "ui:placeholder": "Specify your issues faced",
-        "ui:options": { rows: 4 },
-
-    },
-    links: {
-        "ui:placeholder": "Specify your issues faced",
-    },
-    "ui:submitButtonOptions": {
-        props: {
-        className: "submitBtn",
-        },
-    },
+type FormData = {
+  date: string;
+  language: string;
+  taskCompleted: string;
+  issues:string;
+  links:string;
 };
 
-const theme = createTheme({
-  components: {
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "oklch(51.1% 0.262 276.966)",
-            },
-        },
-        notchedOutline: {
-            border: "2px solid gray", // border line
-            borderRadius: "999px", // pill shape
-        },
-      },
-    },
-  },
-});
-
-// const theme = createTheme({
-//   typography: {
-//     fontFamily: "Poppins, sans-serif",
-//   },
-//   components: {
-//     MuiTextField: {
-//       styleOverrides: {
-//         root: {
-//             border:"1px solid green",
-//             borderRadius:"99999px"
-//         },
-
-//       },
-//     },
-    
-//   },
-// });
-
-
-// ---------------- COMPONENT ----------------
 export default function CheckInForm() {
-  const [data, setData] = useState<any>(null);
+  const [formData, setFormData] = useState<FormData>({
+    date:"",
+    language:"",
+    taskCompleted:"",
+    issues:"",
+    links:""
+  });
 
-  const handleSubmit = ({ formData }: any) => {
-    console.log("Submitted:", formData);
-    setData(formData);
-  };
+  function handleChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleSubmit() {
+    e.preventDefault();
+    alert(
+      // `Submitted!\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
+    );
+  }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          maxWidth: "750px",
-          margin: "auto",
-          padding: 4,
-        }}
-      >
-        {/* TITLE */}
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-            textAlign: "center",
-            mb: 3,
-          }}
-        >
-          Daily Check-In Report
-        </Typography>
+    <div className="w-2xl m-auto bg-white rounded-2xl shadow-md">
+      <div className="flex border-b p-4 justify-between">
+          <div className="flex gap-2">
+              <div className="bg-[#f4f1fe] flex justify-center h-10 w-10 items-center rounded-lg">
+                <GradingIcon className="w-full" sx={{
+                  height:"100%",
+                  color:"#5c37eb"
+                }}/>
+              </div>
+              <p className="text-xl font-semibold flex items-center">Add Today's Check-In</p>
+          </div>
+          <CloseIcon />
+        </div>
 
-        {/* FORM CARD */}
-        <Paper
-          elevation={50}
-          sx={{
-            padding: 4,
-            borderRadius: "20px",
-            background: "#ffffff",
-          }}
-        >
-          <Form
-            schema={schema}
-            uiSchema={uiSchema}
-            validator={validator}
-            onSubmit={handleSubmit}
-          />
-        </Paper>
+      <form action={handleSubmit} className="space-y-4">
+        <div className="flex-col flex p-4 gap-4">
+          <div className="flex gap-4">
 
-        {/* OUTPUT */}
-        {data && (
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 3,
-              mt: 4,
-              borderRadius: "15px",
-              background: "#f9f9f9",
-            }}
-          >
-            <Typography variant="h6">Submitted Data:</Typography>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          </Paper>
-        )}
-      </Box>
-    </ThemeProvider>
+            <div className="flex flex-col flex-1">
+              <label className="flex text-sm font-medium">Check-In for Date *</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="w-full border rounded-lg p-2 focus:border-green-500 focus:outline-none"
+                required
+                />
+            </div>
+            <div className="flex flex-col flex-1">
+              <label className="flex text-sm font-medium">Select Language *</label>
+              <select
+                name="language"
+                value={formData.language}
+                className="w-full border rounded-lg p-2 focus:border-green-500"
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select a language</option>
+                {
+                  languageOptions.map((item)=>{
+                    return <option value={item} key={item}>{item}</option>
+                  })
+                }
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">What did you complete today?</label>
+            <textarea
+              name="email"
+              value={formData.taskCompleted}
+              onChange={handleChange}
+              className="w-full border rounded-lg p-2 focus:border-green-500"
+              placeholder="Sumarize your completed tasks for today"
+              required
+              rows={3}
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Issues or problem Faced *</label>
+            <textarea
+              name="issues"
+              value={formData.issues}
+              onChange={handleChange}
+              className="w-full border rounded-lg p-2 focus:border-green-500"
+              placeholder="Specify your issues faced"
+              rows={3}
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium">Related Links *</label>
+            <input
+              type="text"
+              name="links"
+              value={formData.links}
+              onChange={handleChange}
+              className="w-full border rounded-lg p-2 focus:border-green-500"
+              placeholder="Add your application, automation or AI agents links"
+            />
+          </div>
+        </div>
+        <div className="flex gap-2 justify-end border-t p-4">
+          <button
+            type="reset"
+            className="p-2 px-3"
+            >
+            Reset
+          </button>
+          <button
+            type="submit"
+            className="bg-[#5C37EB] text-white text-sm p-2 px-3 rounded-md hover:opacity-90"
+            >
+            Submit
+          </button>
+          </div>
+      </form>
+
+      
+    </div>
   );
 }
