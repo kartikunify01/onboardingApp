@@ -1,10 +1,13 @@
 "use client"
 import { languageOptions } from "@/lib/uses";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { addCheckIn } from "@/app/actions/checkin";
 import GradingIcon from '@mui/icons-material/Grading';
+import TipTap from "./TipTap";
 
 export default function CheckInForm() {
+  const [taskCompleted, setTaskCompleted] = useState("");
+  const [issues, setIssues] = useState("");
   const [, formAction, ] = useActionState(addCheckIn, {
       success: false,
     });
@@ -54,22 +57,32 @@ export default function CheckInForm() {
 
           <div>
             <label className="text-sm font-medium">What did you complete today?</label>
-            <textarea
-              name="taskCompleted"
-              className="w-full border rounded-lg p-2 focus:border-green-500"
-              placeholder="Sumarize your completed tasks for today"
-              required
-              rows={3}
+            <TipTap
+              value={taskCompleted}
+              onChange={setTaskCompleted}
+              // name="taskCompleted"
+              // className="w-full border rounded-lg p-2 focus:border-green-500"
+              // placeholder="Sumarize your completed tasks for today"
+              // required
+              // rows={3}
             />
+            <input type="hidden" name="taskCompleted" value={taskCompleted} />
           </div>
 
           <div>
             <label className="text-sm font-medium">Issues or problem Faced *</label>
-            <textarea
-              name="issues"
-              className="w-full border rounded-lg p-2 focus:border-green-500"
-              placeholder="Specify your issues faced"
-              rows={3}
+            <TipTap
+              value={issues}
+              onChange={setIssues}
+              // className="w-full border rounded-lg p-2 focus:border-green-500"
+              // placeholder="Specify your issues faced"
+              // rows={3}
+            />
+            <input type="hidden" name="issues" value={issues} />
+            <input
+              type="hidden"
+              name="taskCompleted"
+              value={taskCompleted}
             />
           </div>
           <div>

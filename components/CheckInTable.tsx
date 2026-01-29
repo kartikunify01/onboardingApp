@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 
@@ -12,24 +12,23 @@ import {
 } from "@tanstack/react-table";
 
 import { Check_In_Data_Type } from "@/lib/MOCK_DATA";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import axios from 'axios'
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import axios from "axios";
 
 export default function CheckInTable() {
-  const [data,setData] = useState<Check_In_Data_Type[]>([]);
-  useEffect(()=>{
-    async function getCheckIns(){
-      try{
-        const checkIns = await axios.get('/api/checkIns');
-        setData(checkIns.data)
-      }
-      catch(err){
-        console.log("error while fetching: ",err);
+  const [data, setData] = useState<Check_In_Data_Type[]>([]);
+  useEffect(() => {
+    async function getCheckIns() {
+      try {
+        const checkIns = await axios.get("/api/checkIns");
+        setData(checkIns.data);
+      } catch (err) {
+        console.log("error while fetching: ", err);
       }
     }
     getCheckIns();
-  },[])
+  }, []);
   const columns: ColumnDef<Check_In_Data_Type>[] = [
     {
       accessorKey: "id",
@@ -44,12 +43,28 @@ export default function CheckInTable() {
       header: "Language",
     },
     {
-      accessorKey: "learnings",
+      accessorKey: "taskCompleted",
       header: "Learnings",
+      cell: ({ row }) => (
+        <div
+          className="text-left max-w-xs line-clamp-3"
+          dangerouslySetInnerHTML={{
+            __html: row.original.learnings,
+          }}
+        />
+      ),
     },
     {
       accessorKey: "issues",
       header: "Issues",
+      cell: ({ row }) => (
+        <div
+          className="text-left max-w-xs line-clamp-3"
+          dangerouslySetInnerHTML={{
+            __html: row.original.issues,
+          }}
+        />
+      ),
     },
     {
       accessorKey: "links",
@@ -89,7 +104,7 @@ export default function CheckInTable() {
                 >
                   {flexRender(
                     header.column.columnDef.header,
-                    header.getContext()
+                    header.getContext(),
                   )}
                   {{
                     asc: " 🔼",
@@ -103,17 +118,10 @@ export default function CheckInTable() {
 
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}
-            >
+            <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                  <td
-                  key={cell.id}
-                  className="border p-2 text-center"
-                >
-                  {flexRender(
-                    cell.column.columnDef.cell,
-                    cell.getContext()
-                  )}
+                <td key={cell.id} className="border p-2 text-center">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
             </tr>
@@ -138,10 +146,9 @@ export default function CheckInTable() {
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-            <ArrowForwardIosIcon />
+          <ArrowForwardIosIcon />
         </button>
       </div>
     </div>
-    
   );
 }
