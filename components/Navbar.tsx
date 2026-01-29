@@ -6,6 +6,7 @@ import CheckIn from './CheckIn'
 import ContactDets from './ContactDets'
 import { Separator } from "@/components/ui/separator"
 import Logout from './Logout'
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
@@ -17,7 +18,7 @@ const Navbar = () => {
             <h6 className='text-[#3e16d9] font-semibold text-start text-2xl'>Employee Onboarding</h6>
         </div>
         <div className="flex items-center justify-end gap-4">
-            <CheckIn />
+            <Link href={'/check-in'}> <CheckIn /> </Link>
             <ContactDets />
             <Logout />
         </div>

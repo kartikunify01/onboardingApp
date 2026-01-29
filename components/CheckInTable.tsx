@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   ColumnDef,
@@ -11,12 +11,26 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { MOCK_DATA, MOCK_DATA_TYPE } from "@/lib/MOCK_DATA";
+import { Check_In_Data_Type } from "@/lib/MOCK_DATA";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import axios from 'axios'
 
 export default function CheckInTable() {
-  const columns: ColumnDef<MOCK_DATA_TYPE>[] = [
+  const [data,setData] = useState<Check_In_Data_Type[]>([]);
+  useEffect(()=>{
+    async function getCheckIns(){
+      try{
+        const checkIns = await axios.get('/api/checkIns');
+        setData(checkIns.data)
+      }
+      catch(err){
+        console.log("error while fetching: ",err);
+      }
+    }
+    getCheckIns();
+  },[])
+  const columns: ColumnDef<Check_In_Data_Type>[] = [
     {
       accessorKey: "id",
       header: "ID",
@@ -54,7 +68,7 @@ export default function CheckInTable() {
   ];
 
   const table = useReactTable({
-    data: MOCK_DATA,
+    data: data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -62,7 +76,7 @@ export default function CheckInTable() {
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 flex-1">
       <table className="w-full">
         <thead className="bg-[#5c37eb] text-white">
           {table.getHeaderGroups().map((headerGroup) => (

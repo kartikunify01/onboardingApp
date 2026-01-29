@@ -1,43 +1,16 @@
 "use client"
-import React, { useState, ChangeEvent, FormEvent } from "react";
 import CloseIcon from '@mui/icons-material/Close';
-import Image from "next/image";
 import { languageOptions } from "@/lib/uses";
+import { useActionState } from "react";
+import { addCheckIn } from "@/app/actions/checkin";
 import GradingIcon from '@mui/icons-material/Grading';
 
-type FormData = {
-  date: string;
-  language: string;
-  taskCompleted: string;
-  issues:string;
-  links:string;
-};
-
 export default function CheckInForm() {
-  const [formData, setFormData] = useState<FormData>({
-    date:"",
-    language:"",
-    taskCompleted:"",
-    issues:"",
-    links:""
-  });
-
-  function handleChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
-
-  function handleSubmit() {
-    e.preventDefault();
-    alert(
-      // `Submitted!\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
-    );
-  }
-
+  const [state, formAction, pending] = useActionState(addCheckIn, {
+      success: false,
+    });
   return (
-    <div className="w-2xl m-auto bg-white rounded-2xl shadow-md">
+    <div className="w-xl m-auto bg-white rounded-2xl shadow-md">
       <div className="flex border-b p-4 justify-between">
           <div className="flex gap-2">
               <div className="bg-[#f4f1fe] flex justify-center h-10 w-10 items-center rounded-lg">
@@ -48,10 +21,9 @@ export default function CheckInForm() {
               </div>
               <p className="text-xl font-semibold flex items-center">Add Today's Check-In</p>
           </div>
-          <CloseIcon />
         </div>
 
-      <form action={handleSubmit} className="space-y-4">
+      <form action={formAction} className="space-y-4">
         <div className="flex-col flex p-4 gap-4">
           <div className="flex gap-4">
 
@@ -60,8 +32,6 @@ export default function CheckInForm() {
               <input
                 type="date"
                 name="date"
-                value={formData.date}
-                onChange={handleChange}
                 className="w-full border rounded-lg p-2 focus:border-green-500 focus:outline-none"
                 required
                 />
@@ -70,9 +40,7 @@ export default function CheckInForm() {
               <label className="flex text-sm font-medium">Select Language *</label>
               <select
                 name="language"
-                value={formData.language}
                 className="w-full border rounded-lg p-2 focus:border-green-500"
-                onChange={handleChange}
                 required
               >
                 <option value="">Select a language</option>
@@ -88,9 +56,7 @@ export default function CheckInForm() {
           <div>
             <label className="text-sm font-medium">What did you complete today?</label>
             <textarea
-              name="email"
-              value={formData.taskCompleted}
-              onChange={handleChange}
+              name="taskCompleted"
               className="w-full border rounded-lg p-2 focus:border-green-500"
               placeholder="Sumarize your completed tasks for today"
               required
@@ -102,8 +68,6 @@ export default function CheckInForm() {
             <label className="text-sm font-medium">Issues or problem Faced *</label>
             <textarea
               name="issues"
-              value={formData.issues}
-              onChange={handleChange}
               className="w-full border rounded-lg p-2 focus:border-green-500"
               placeholder="Specify your issues faced"
               rows={3}
@@ -114,8 +78,6 @@ export default function CheckInForm() {
             <input
               type="text"
               name="links"
-              value={formData.links}
-              onChange={handleChange}
               className="w-full border rounded-lg p-2 focus:border-green-500"
               placeholder="Add your application, automation or AI agents links"
             />
@@ -135,9 +97,10 @@ export default function CheckInForm() {
             Submit
           </button>
           </div>
-      </form>
-
-      
+      </form>      
     </div>
   );
 }
+
+
+
