@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ContactDets = () => {
   return (
     <div className="flex justify-center items-center gap-2">

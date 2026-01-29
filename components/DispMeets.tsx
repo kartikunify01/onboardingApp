@@ -9,7 +9,7 @@ const DispMeets = ({ todos }: { todos: TaksMeetProps[] }) => {
       <div className="flex flex-col bg-white rounded-xl max-h-[400px] overflow-y-auto shadow-md">
         {todos.map((x) => (
           <div
-            key={x.Task}
+            key={x.id}
             className="flex px-4 py-3 border-b last:border-none gap-4"
           >
             <div className="flex border rounded-lg w-10 items-center h-10 justify-center">

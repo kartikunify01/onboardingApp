@@ -9,8 +9,6 @@ import {
   RJSFSchema,
   UiSchema,
   WidgetProps,
-  RegistryWidgetsType,
-  ArrayFieldTemplateProps,
 } from "@rjsf/utils";
 import { useState } from 'react';
 

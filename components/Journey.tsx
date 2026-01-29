@@ -1,7 +1,4 @@
-import React from 'react'
 import PlanDetails from './PlanDetails'
-import { basicOnb } from '@/lib/basicOnboarding';
-
 const Journey = () => {
   return (
     <div className='w-[70%] flex flex-col'>

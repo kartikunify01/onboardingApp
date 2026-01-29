@@ -11,10 +11,10 @@ export const onboardingPlans:onboardingPlansType[] = [
         totalDays:21,
         startDate: new Date(2025,0,5)
     },
-    {
-        id:1,
-        title:"Advanced Training",
-        totalDays:21,
-        startDate: new Date(2025,0,26)
-    }
+    // {
+    //     id:1,
+    //     title:"Advanced Training",
+    //     totalDays:21,
+    //     startDate: new Date(2025,0,26)
+    // }
 ]

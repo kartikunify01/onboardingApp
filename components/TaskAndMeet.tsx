@@ -1,10 +1,9 @@
-import React from 'react'
 import { TaksMeetProps } from '@/lib/types'
 import DispTasks from './DispTasks';
 import DispMeets from './DispMeets';
 
 const TaskAndMeet = ({tasksAndMeets} : {tasksAndMeets:TaksMeetProps[]}) => {
-  const meets = tasksAndMeets.filter((item)=>{
+  const meets = tasksAndMeets?.filter((item)=>{
     return item.type == "Meeting"
   });
   const tasks:TaksMeetProps[] = tasksAndMeets.filter((item)=>{

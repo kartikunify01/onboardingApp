@@ -5,6 +5,7 @@ export interface TaksMeetProps{
   Topic:string;
   Deadline:string;
   profile:string;
+  id:number;
 }
 
 

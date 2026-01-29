@@ -4,8 +4,6 @@ import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import FormatStrikethroughIcon from "@mui/icons-material/FormatStrikethrough";
-import UndoIcon from "@mui/icons-material/Undo";
-import RedoIcon from "@mui/icons-material/Redo";
 
 export default function BubbleMenuToolbar({ editor }: { editor: Editor }) {
   // Read the current editor's state, and re-render the component when it changes

@@ -1,12 +1,11 @@
 "use client"
-import CloseIcon from '@mui/icons-material/Close';
 import { languageOptions } from "@/lib/uses";
 import { useActionState } from "react";
 import { addCheckIn } from "@/app/actions/checkin";
 import GradingIcon from '@mui/icons-material/Grading';
 
 export default function CheckInForm() {
-  const [state, formAction, pending] = useActionState(addCheckIn, {
+  const [, formAction, ] = useActionState(addCheckIn, {
       success: false,
     });
   return (
