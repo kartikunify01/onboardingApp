@@ -23,6 +23,8 @@
     "@rjsf/mui": "^6.2.5",
     "@rjsf/utils": "^6.2.5",
     "@rjsf/validator-ajv8": "^6.2.5",
+    "@tanstack/react-query": "^5.90.20",
+    "@tanstack/react-query-persist-client": "^5.90.22",
     "@tanstack/react-table": "^8.21.3",
     "@tiptap/extension-bubble-menu": "^3.17.1",
     "@tiptap/extension-highlight": "^3.17.1",
@@ -39,6 +41,7 @@
     "next": "16.1.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7"
   },

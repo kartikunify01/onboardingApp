@@ -9,3 +9,9 @@ export interface TaksMeetProps{
 }
 
 
+export interface EmployeeData{
+  id: number;
+  manager_name: string;
+  employee_name: string;
+  email_id: string;
+}

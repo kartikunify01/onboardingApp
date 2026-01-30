@@ -4,36 +4,18 @@ import { Box, Paper, TextField, Typography } from "@mui/material";
 import Form, { IChangeEvent } from "@rjsf/core";
 import { FieldTemplateProps, RJSFSchema, WidgetProps } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {toast} from 'react-toastify'
 
 const schema: RJSFSchema = {
   type: "object",
-  required: ["firstName", "lastName"],
+  required: ["firstName"],
   properties: {
     firstName: { type: "string", title: "First Name" },
     lastName: { type: "string", title: "Last Name" },
   },
-};
-const uiSchema = {
-  "ui:options": {
-    label: false,
-  },
-  "ui:title": "Your password",
-  //   firstName: {
-  //     "ui:autofocus": true,
-  //     "ui:placeholder": "Enter your first name",
-  //   },
-  //   lastName: {
-  //     "ui:placeholder": "Enter your last name",
-  //   },
-  //   managerFirstName: {
-  //     "ui:placeholder": "Enter your first name",
-  //   },
-  //   managerLastName: {
-  //     "ui:placeholder": "Enter your last name",
-  //   },
 };
 interface UserProfile {
   firstName: string;
@@ -77,33 +59,37 @@ const templates = {
   FieldTemplate: CustomFieldTemplate,
 };
 const page = () => {
-  const [formData, setFormData] = useState<UserProfile | null | undefined>(
-    null,
-  );
+  const router = useRouter();
+  const loginMutation = useMutation({
+    mutationFn: async (formData:UserProfile)=>{
+      const response = await axios.post('/api/login',formData);
+      return response.data;
+    },
 
+    onSuccess:(data)=>{
+      localStorage.setItem("token",JSON.stringify(data.data[0]));
+      console.log("Welcome ",data.data[0].employee_name);
+      toast.success(`Welcome ${data.data[0].employee_name}`);
+      router.push("/");
+    },
+    onError: (error) => {
+      console.log("Login error:", error);
+      toast.error("Invalid User");
+    },
+  })
   const handleSubmit = async (data:IChangeEvent<UserProfile,RJSFSchema>) => {
-    setFormData(data.formData);
-    const formData = data.formData;
-    if(!formData) return;
-
-    const response = await axios.post('/api/login',formData)
-    if(response.data.success){
-      console.log("response: ",response.data.data[0]);
-      redirect('/')
-    }
-    else{
-      console.error("error occ: ",response.data)
-    }
+    if(!data.formData) return;
+    return loginMutation.mutate(data.formData);
   };
 
   return (
     <div className="flex bg-gradient-to-r from-[#a896eb] to-[#27126F] h-full">
-      <Box sx={{ maxWidth: 700, margin: "auto", padding: 3 }}>
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
         <Typography
           variant="h4"
           gutterBottom
           sx={{
-            fontSize: "2.5rem",
+            fontSize: "2rem",
             fontWeight: "bold",
             color: "white",
             paddingBottom: 4,
@@ -115,7 +101,6 @@ const page = () => {
         <Paper elevation={3} sx={{ padding: 3, marginBottom: 3, gap: 4, boxShadow:".75rem .75rem #86708bff",borderRadius:".75rem"}}>
           <Form
             schema={schema}
-            uiSchema={uiSchema}
             validator={validator as any}
             onSubmit={handleSubmit}
             widgets={widgets}
@@ -138,15 +123,6 @@ const page = () => {
             </button>
           </Form>
         </Paper>
-
-        {formData && (
-          <Paper elevation={3} sx={{ padding: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Submitted Data:
-            </Typography>
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-          </Paper>
-        )}
       </Box>
     </div>
   );

@@ -7,6 +7,7 @@ import StepContent from "@mui/material/StepContent";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@/app/hooks/useUser";
 const steps = [
   {
     label: "Access & Induction",
@@ -31,34 +32,22 @@ const steps = [
   },
 ];
 export default function RmDetails() {
-  // const [activeStep, setActiveStep] = React.useState(0);
-
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  // };
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  // };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
   const [toggle,setToggle] = React.useState(true);
   function handleClick(){
     setToggle((state)=>!state);
   }
+  const {data :user} = useUser();
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex flex-col bg-gradient-to-r from-[#7F62E5] to-[#27126F] p-6 rounded-t-3xl gap-2">
         <div className="text-2xl text-white font-extrabold">
           Reporting Manager Details
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Image src={"/images/star.svg"} height={40} width={40} alt="star" />
           <div className="flex flex-col">
-            <h1 className="text-white text-sm">Davda Harshit Deepak</h1>
-            <h5 className="text-white text-sm">harshit.davda@unifyapps.com</h5>
+            <h1 className="text-white text-xl font-bold capitailize">{user?.manager_name}</h1>
+            {/* <h5 className="text-white text-sm">harshit.davda@unifyapps.com</h5> */}
           </div>
         </div>
       </div>

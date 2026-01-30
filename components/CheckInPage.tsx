@@ -6,15 +6,17 @@ import { Button, Tabs } from "@mui/material";
 import CheckInForm from "./CheckInForm";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@/app/hooks/useUser";
 
 const CheckInPage = () => {
   const [add, openAdd] = useState<boolean>(true);
+  const {data : user} = useUser();
   return (
     <div className="flex flex-col">
       <div className="flex justify-between border-b items-center p-2">
         <div className="flex-col flex">
-          <h5 className="text-3xl text-start font-bold whitespace-pre-line text-[#5c37eb]">
-            Hey Kartik Kumar!
+          <h5 className="text-3xl text-start font-bold whitespace-pre-line text-[#5c37eb] capitalize">
+            Hey {user?.employee_name}!
           </h5>
           <p className="text-sm">
             Update your daily check-ins & complete your pending assignments
@@ -23,7 +25,7 @@ const CheckInPage = () => {
         <div className="flex items-center gap-2">
           <div className="flex flex-col border shadow-md p-2 rounded-lg">
             <p className="text-xs">Manager</p>
-            <p className="text-sm">Davda Harshit Deepak</p>
+            <p className="text-sm capitalize">{user?.manager_name}</p>
           </div>
           <Link href={'/'}>
             <Button
