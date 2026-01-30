@@ -4,16 +4,16 @@ import { Box, Paper, TextField, Typography } from "@mui/material";
 import Form, { IChangeEvent } from "@rjsf/core";
 import { FieldTemplateProps, RJSFSchema, WidgetProps } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
+import axios from "axios";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 const schema: RJSFSchema = {
   type: "object",
-  required: ["firstName", "lastName", "managerFirstName", "managerLastName"],
+  required: ["firstName", "lastName"],
   properties: {
     firstName: { type: "string", title: "First Name" },
     lastName: { type: "string", title: "Last Name" },
-    managerFirstName: { type: "string", title: "Manager's First Name" },
-    managerLastName: { type: "string", title: "Manager's Last Name" },
   },
 };
 const uiSchema = {
@@ -63,14 +63,7 @@ const widgets = {
   TextWidget: CustomTextWidget,
 };
 function CustomFieldTemplate(props: FieldTemplateProps) {
-  const {
-    classNames,
-    style,
-    help,
-    description,
-    errors,
-    children,
-  } = props;
+  const { classNames, style, help, description, errors, children } = props;
   return (
     <div className={classNames} style={style}>
       {description}
@@ -88,45 +81,74 @@ const page = () => {
     null,
   );
 
-  const handleSubmit = (
-    data: IChangeEvent<UserProfile, RJSFSchema, UserProfile>,
-  ) => {
-    console.log("Form data submitted:", data.formData);
+  const handleSubmit = async (data:IChangeEvent<UserProfile,RJSFSchema>) => {
     setFormData(data.formData);
+    const formData = data.formData;
+    if(!formData) return;
+
+    const response = await axios.post('/api/login',formData)
+    if(response.data.success){
+      console.log("response: ",response.data.data[0]);
+      redirect('/')
+    }
+    else{
+      console.error("error occ: ",response.data)
+    }
   };
 
   return (
-    <Box sx={{ maxWidth: 600, margin: "0 auto", padding: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{
-        fontSize:"2rem",
-        fontWeight:"bold",
-        color:"#5c37eb",
-      }}>
-        Employee Onboarding Login
-      </Typography>
-
-      <Paper elevation={3} sx={{ padding: 3, marginBottom: 3,gap:4 }}>
-        <Form
-          schema={schema}
-          uiSchema={uiSchema}
-          validator={validator as any}
-          onSubmit={handleSubmit}
-          widgets={widgets}
-          templates={templates}
+    <div className="flex bg-gradient-to-r from-[#a896eb] to-[#27126F] h-full">
+      <Box sx={{ maxWidth: 700, margin: "auto", padding: 3 }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontSize: "2.5rem",
+            fontWeight: "bold",
+            color: "white",
+            paddingBottom: 4,
+          }}
         >
-          <button type="submit" style={{margin:8,cursor:"pointer",padding:8,backgroundColor:"#5c37eb",color:"white",borderRadius:"1rem"}}>Login</button>
-        </Form>
-      </Paper>
+          Employee Onboarding Login
+        </Typography>
 
-      {formData && (
-        <Paper elevation={3} sx={{ padding: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Submitted Data:
-          </Typography>
-          <pre>{JSON.stringify(formData, null, 2)}</pre>
+        <Paper elevation={3} sx={{ padding: 3, marginBottom: 3, gap: 4, boxShadow:".75rem .75rem #86708bff",borderRadius:".75rem"}}>
+          <Form
+            schema={schema}
+            uiSchema={uiSchema}
+            validator={validator as any}
+            onSubmit={handleSubmit}
+            widgets={widgets}
+            templates={templates}
+          >
+            <button
+              type="submit"
+              style={{
+                margin: 8,
+                cursor: "pointer",
+                padding: 8,
+                backgroundColor: "#5c37eb",
+                color: "white",
+                width:"100%",
+                borderRadius: "1rem",
+                marginTop:"2rem"
+              }}
+            >
+              Login
+            </button>
+          </Form>
         </Paper>
-      )}
-    </Box>
+
+        {formData && (
+          <Paper elevation={3} sx={{ padding: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Submitted Data:
+            </Typography>
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+          </Paper>
+        )}
+      </Box>
+    </div>
   );
 };
 

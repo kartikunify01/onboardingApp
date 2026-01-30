@@ -1,16 +1,16 @@
 import Image from 'next/image'
-import React from 'react'
+import Link from 'next/link'
 
 const Logout = () => {
   return (
-    <div className='p-1.5'>
+    <Link className='p-1.5' href={'/login'}>
         <Image
             src={'/images/logout.svg'} 
             height={16}
             width={16}
             alt='logout'
         />
-    </div>
+    </Link>
   )
 }
 

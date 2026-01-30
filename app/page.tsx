@@ -9,18 +9,10 @@ import Navbar from '@/components/Navbar'
 
 const page = () => {
   return (
-      // <CustomTextWidget />
       <div className='flex flex-col h-screen'>
         <Navbar />
         <Body />
       </div>
-        // <div className='flex flex-1'>
-          // <CheckInForm />
-        // </div> 
-      // <CheckInPage />
-      // <Page />
-        // <Tiptap />
-        
   )
 }
 

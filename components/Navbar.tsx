@@ -1,10 +1,7 @@
-import Image from 'next/image'
-import React from 'react'
 import LogoImage from './LogoImage'
 import NameImage from './NameImage'
 import CheckIn from './CheckIn'
 import ContactDets from './ContactDets'
-import { Separator } from "@/components/ui/separator"
 import Logout from './Logout'
 import Link from 'next/link'
 
