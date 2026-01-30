@@ -8,7 +8,7 @@ interface CalenItemProps{
 const CalenItem = ({dayNo,progress,selected,clicks}:CalenItemProps) => {
   const hue = (progress * 130) / 100;
   return (
-    <div className={'flex flex-col rounded-md border items-center px-5 py-1 bg-violet-500 border-[#d2c7f9] hover:bg-violet-100 cursor-pointer'}
+    <div className={(selected ? "bg-violet-500 " : " ") + 'flex flex-col rounded-md border items-center px-5 py-1 border-[#d2c7f9] hover:bg-violet-100 cursor-pointer'}
       onClick={()=>{
         clicks(dayNo)
         console.log("clicked ",dayNo)
