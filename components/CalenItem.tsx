@@ -14,7 +14,6 @@ const CalenItem = ({dayNo,progress,selected,clicks}:CalenItemProps) => {
         console.log("clicked ",dayNo)
       }
       }
-      style={selected ?{backgroundColor:"#dcd5f8ff"} : {}}
     >
         <span className='text-xs text-start font-normal whitespace-pre-line'>Day</span>
         <span className='text-xl text-start font-medium -mt-xxs whitespace-pre-line'>{dayNo+1}</span>
