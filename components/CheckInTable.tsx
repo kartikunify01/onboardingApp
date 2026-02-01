@@ -1,7 +1,5 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -10,7 +8,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
 import { Check_In_Data_Type } from "@/lib/MOCK_DATA";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -37,6 +34,9 @@ export default function CheckInTable() {
     {
       accessorKey: "check_in_date",
       header: "Check In Date",
+      cell:({row})=>{
+        return new Date(row.original.check_in_date).toLocaleDateString();
+      }
     },
     {
       accessorKey: "language",
@@ -115,7 +115,6 @@ export default function CheckInTable() {
             </tr>
           ))}
         </thead>
-
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
