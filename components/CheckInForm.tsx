@@ -12,7 +12,7 @@ export default function CheckInForm() {
       success: false,
     });
   return (
-    <div className="w-xl rounded-2xl shadow-md absolute flex flex-col justify-start">
+    <div className="w-xl rounded-2xl shadow-md flex flex-col justify-start top-auto left-auto">
       <div className="flex border-b p-4 justify-between">
           <div className="flex gap-2">
               <div className="bg-[#f4f1fe] flex justify-center h-10 w-10 items-center rounded-lg">

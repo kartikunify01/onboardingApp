@@ -117,9 +117,9 @@ export default function CheckInTable() {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className=" h-10 overflow-hidden">
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border p-2 text-center">
+                <td key={cell.id} className="border p-2 text-center text-ellipsis whitespace-nowrap">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
